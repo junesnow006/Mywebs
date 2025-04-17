@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<!-- saved from url=(0088)https://a0b154ac-6e8d-4a48-bcee-e9b267b34429-%2D1744858800-%2Dcdf9898c.app.yourware.app/ -->
+<html lang="zh-CN" class="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芯片战争阅读分享</title>
+    <link href="./tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./all.min.css">
+    <link rel="stylesheet" href="./css2">
+    <link rel="stylesheet" href="./css2(1)">
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #64b5f6;
+            --secondary-color: #f50057;
+            --secondary-dark: #c51162;
+            --secondary-light: #ff4081;
+            --text-color-light: #202124;
+            --text-color-dark: #e8eaed;
+            --bg-color-light: #f8f9fa;
+            --bg-color-dark: #202124;
+            --surface-light: #ffffff;
+            --surface-dark: #303134;
+            --border-color-light: #dadce0;
+            --border-color-dark: #5f6368;
+
+            /* Material elevation shadows */
+            --shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-2: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+            --shadow-3: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+            --shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            --shadow-5: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+        }
+        
+        .light {
+            --text-color: var(--text-color-light);
+            --bg-color: var(--bg-color-light);
+            --surface: var(--surface-light);
+            --border-color: var(--border-color-light);
+        }
+        
+        .dark {
+            --text-color: var(--text-color-dark);
+            --bg-color: var(--bg-color-dark);
+            --surface: var(--surface-dark);
+            --border-color: var(--border-color-dark);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--surface);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .loader:before, .loader:after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .loader:before {
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-light);
+            animation-name: pulse;
+            opacity: 0.7;
+        }
+
+        .loader:after {
+            width: 80%;
+            height: 80%;
+            background-color: var(--primary-color);
+            top: 10%;
+            left: 10%;
+            animation-name: pulse-reverse;
+            opacity: 0.5;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.6); opacity: 0.3; }
+            50% { transform: scale(1.0); opacity: 0.5; }
+            100% { transform: scale(0.6); opacity: 0.3; }
+        }
+
+        @keyframes pulse-reverse {
+            0% { transform: scale(1.0); opacity: 0.5; }
+            50% { transform: scale(0.6); opacity: 0.3; }
+            100% { transform: scale(1.0); opacity: 0.5; }
+        }
+
+        /* Material Card */
+        .card {
+            background-color: var(--surface);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            position: relative;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-3);
+            transform: translateY(-4px);
+        }
+
+        .card-elevated {
+            box-shadow: var(--shadow-2);
+        }
+        
+        .card-elevated:hover {
+            box-shadow: var(--shadow-4);
+        }
+        
+        /* Material Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.0892857143em;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(50, 50);
+                opacity: 0;
+            }
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: var(--shadow-2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            box-shadow: var(--shadow-2);
+        }
+        
+        .btn-text {
+            background-color: transparent;
+            color: var(--primary-color);
+            box-shadow: none;
+        }
+        
+        .btn-text:hover {
+            background-color: rgba(26, 115, 232, 0.04);
+        }
+        
+        /* Sections Animation */
+        .section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--primary-color);
+            background-color: transparent;
+        }
+        
+        .theme-toggle:hover {
+            background-color: rgba(26, 115, 232, 0.08);
+        }
+        
+        /* Header */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background-color: var(--surface);
+            box-shadow: var(--shadow-1);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .header-scroll {
+            box-shadow: var(--shadow-2);
+            height: 56px;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1511044568932-338cba0ad803?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Book Cover Animation */
+        .book-cover-wrapper {
+            position: relative;
+            perspective: 1000px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .book-cover {
+            width: 100%;
+            height: auto;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px;
+            box-shadow: var(--shadow-3);
+        }
+        
+        .book-cover-wrapper:hover .book-cover {
+            transform: rotateY(15deg) rotateX(5deg);
+            box-shadow: var(--shadow-4);
+        }
+        
+        /* Author Image */
+        .author-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            transition: all 0.3s;
+            box-shadow: var(--shadow-1);
+        }
+        
+        .author-image:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-3);
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: 2px;
+            background-color: var(--primary-light);
+            left: 10px;
+            top: 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            left: -40px;
+            top: 0;
+            z-index: 1;
+            box-shadow: var(--shadow-1);
+            transition: all 0.3s;
+        }
+        
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+            background-color: var(--secondary-color);
+            box-shadow: var(--shadow-2);
+        }
+        
+        /* Chip Cards */
+        .chip-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chip-card-icon {
+            font-size: 48px;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+            transition: all 0.5s;
+            color: var(--primary-color);
+        }
+        
+        .chip-card:hover .chip-card-icon {
+            transform: rotate(0) scale(1.2);
+            opacity: 0.2;
+        }
+        
+        /* TOC Links */
+        .toc-link {
+            padding: 8px;
+            border-radius: 4px;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .toc-link:hover {
+            background-color: rgba(26, 115, 232, 0.08);
+            padding-left: 16px;
+            color: var(--primary-color);
+        }
+        
+        /* Quote Card */
+        .quote-card {
+            position: relative;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            font-style: italic;
+            margin: 20px 0;
+        }
+        
+        .quote-card::before {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            top: -20px;
+            left: -15px;
+            color: var(--primary-light);
+            opacity: 0.2;
+        }
+        
+        .quote-card-author {
+            font-size: 0.875rem;
+            text-align: right;
+            margin-top: 8px;
+            color: var(--primary-color);
+        }
+        
+        /* Progress Timeline */
+        .progress-timeline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 60px 0;
+            position: relative;
+        }
+        
+
+        .timeline-node {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            box-shadow: var(--shadow-2);
+            transition: all 0.3s;
+        }
+        
+        .timeline-node:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-3);
+        }
+        
+        .timeline-connector {
+            height: 4px;
+            flex-grow: 1;
+            background-color: var(--primary-light);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Related Book Card */
+        .related-book-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .related-book-cover {
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.3s;
+        }
+        
+        .related-book-card:hover .related-book-cover {
+            transform: scale(1.05);
+        }
+        
+        /* Footer */
+        .app-footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-heading {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        /* QR Code */
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            padding: 4px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-2);
+        }
+        
+        .qr-code:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-3);
+        }
+
+        /* Animations */
+        @keyframes floatUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .animate-float-up {
+            animation: floatUp 0.8s ease-out forwards;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Card Grid Layout */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Responsive Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: var(--shadow-2);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: auto;
+                padding: 100px 0 50px;
+            }
+            
+            .progress-timeline {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .timeline-node {
+                margin: 20px 0;
+            }
+            
+            .timeline-connector {
+                width: 4px;
+                height: 40px;
+            }
+            
+            .related-book-cover {
+                height: 150px;
+            }
+        }
+
+        /* Prefers-reduced-motion */
+        @media (prefers-reduced-motion) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Custom Shape Dividers */
+        .shape-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .shape-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 70px;
+        }
+
+        .shape-divider .shape-fill {
+            fill: var(--surface);
+        }
+
+        /* Fancy Background */
+        .fancy-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(26, 115, 232, 0.05) 0%, rgba(245, 0, 87, 0.05) 100%);
+            z-index: -1;
+        }
+
+        /* Chip War Special Effect */
+        .chip-war-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Preloader -->
+    <div class="preloader hidden" id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header" id="header">
+        <div class="container mx-auto px-4 h-full flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold chip-war-text">芯片战争</h1>
+            <div class="flex items-center">
+                <button id="theme-toggle" class="theme-toggle" aria-label="切换主题">
+                    <i class="fas fa-moon text-xl dark:hidden"></i>
+                    <i class="fas fa-sun text-xl hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-bg"></div>
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 hero-content animate-float-up" style="animation-delay: 0.3s;">
+                        <span class="inline-block text-sm font-medium bg-secondary-light bg-opacity-20 text-secondary-dark px-3 py-1 rounded-full mb-4 dark:bg-secondary-dark dark:bg-opacity-20 dark:text-secondary-light">精选读物分享</span>
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">《<span class="chip-war-text">芯片战争</span>》</h2>
+                        <p class="text-lg mb-8 max-w-xl">一部芯片产业发展、科技突破以及各国为控制芯片技术而进行长达数十年斗争的历史纪实。</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#book-intro" class="btn btn-primary">了解更多</a>
+                            <a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#related-reading" class="btn btn-text">获取电子版</a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center mt-10 md:mt-0 animate-float-up" style="animation-delay: 0.6s;">
+                        <div class="book-cover-wrapper">
+                            <img src="./7e9f9b18163d2e0b20f4b4c3cffc3a58.jpg" alt="芯片战争" class="book-cover shadow-lg" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shape-divider">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Book Info Section -->
+        <section id="book-intro" class="py-16 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">书籍信息</span>
+                    <h2 class="text-3xl font-bold">关于这本书</h2>
+                </div>
+                
+                <div class="card-elevated p-8 rounded-lg mb-12 max-w-4xl mx-auto">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-shrink-0">
+                            <div class="book-cover-wrapper">
+                                <img src="./7e9f9b18163d2e0b20f4b4c3cffc3a58.jpg" alt="芯片战争" class="book-cover" loading="lazy">
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4 text-primary-color">《芯片战争》</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-user text-primary-color"></i>
+                                    <span><strong>作者：</strong>[美]克里斯·米勒（Chris Miller）</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-language text-primary-color"></i>
+                                    <span><strong>译者：</strong>蔡树军</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-calendar-alt text-primary-color"></i>
+                                    <span><strong>出版年份：</strong>2023年</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-user-edit text-primary-color"></i>
+                                    <span><strong>分享者：</strong>卓夏非</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fas fa-clock text-primary-color"></i>
+                                    <span><strong>分享时间：</strong>2025年4月</span>
+                                </li>
+                                <li class="flex gap-2 mt-4">
+                                    <i class="fas fa-award text-primary-color mt-1"></i>
+                                    <div>
+                                        <strong>获奖情况：</strong>
+                                        <p class="text-sm mt-1">《金融时报》将之推荐为年度最佳商业书，《经济学人》评其为年度最佳新书。</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="mt-6">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i class="fas fa-quote-left text-primary-color"></i>
+                                    <span class="font-medium">专家点评</span>
+                                </div>
+                                <div class="quote-card">
+                                    <p>"文笔优美，引人入胜，用讲故事的方式讲述了芯片的发展史与竞争史，展现了科技创新背后的激烈竞争与暗流涌动，值得推荐。"</p>
+                                    <div class="quote-card-author">——郭奕武，上海市集成电路行业协会秘书长</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-primary-light bg-opacity-10 rounded-lg p-6 dark:bg-primary-dark dark:bg-opacity-10 max-w-4xl mx-auto">
+                    <h3 class="text-xl font-bold mb-4 text-primary-color flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> 内容简介
+                    </h3>
+                    <p class="mb-4 leading-relaxed">
+                        《芯片战争》讲述了芯片业崛起的历史，背后的科技突破和商业进程史，以及各国为控制芯片技术而进行的长达数十年的斗争历程。它将芯片历史融合进科技发展、商业战略、大国博弈、地缘政治，多线交织，波澜壮阔。
+                    </p>
+                    <p class="leading-relaxed">
+                        本书从二战后军事需求出发，讲述晶体管的发明，到集成电路的诞生，再到现代芯片产业的形成。书中详细描绘了美国、日本、韩国、中国台湾以及中国大陆在芯片领域的竞争与发展，分析了背后的地缘政治因素与战略意义。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authors Section -->
+        <section class="py-16 bg-primary-color bg-opacity-5 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">主创人员</span>
+                    <h2 class="text-3xl font-bold">作者与译者</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="card p-6">
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                            <img src="./c7d1c986c2730181045024e9949d0b0f.jpeg" alt="克里斯·米勒" class="author-image" loading="lazy">
+                                 
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-primary-color text-center sm:text-left">克里斯·米勒</h3>
+                                <p class="text-sm leading-relaxed">
+                                    美国塔夫茨大学弗莱彻学院国际史副教授，美国企业研究所珍妮·科克帕特里克客座研究员，美国外交政策研究所欧亚区主任，宏观经济与地缘政治咨询公司格林曼特主任。《纽约时报》《华尔街日报》等媒体特约撰稿人。拥有耶鲁大学历史学博士学位和哈佛大学历史学学士学位。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                            <img src="./1bd37fa27c5542de1b576252a2478969.jpeg" alt="蔡树军" class="author-image" loading="lazy">
+                                 
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-primary-color text-center sm:text-left">蔡树军</h3>
+                                <p class="text-sm leading-relaxed">
+                                    半导体芯片研究专家，中国电子科技集团公司第五十八研究所所长、正高级工程师，集成电路与微系统全国重点实验室主任，专注于科技领域翻译，致力于将优秀的科技著作引入中文世界。美国加州大学洛杉矶分校（UCLA）电子工程系博士。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table of Contents -->
+        <section class="py-16 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">目录</span>
+                    <h2 class="text-3xl font-bold">内容概览</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">本书结构清晰，分为八个部分详细介绍了芯片产业的发展历程和背后的地缘政治因素</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary-color rounded-full text-white font-bold mb-4">01</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">冷战时期的筹码</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">从钢铁到硅片</li>
+                            <li class="toc-link">开关</li>
+                            <li class="toc-link">诺伊斯、基尔比和集成电路</li>
+                            <li class="toc-link">迫击炮和规模生产</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary-color rounded-full text-white font-bold mb-4">02</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">美国世界的电路</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">苏联硅谷</li>
+                            <li class="toc-link">"复制"策略</li>
+                            <li class="toc-link">晶体管推销员</li>
+                            <li class="toc-link">"晶体管女孩"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary-color rounded-full text-white font-bold mb-4">03</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">失去领导能力？</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">"竞争很激烈"</li>
+                            <li class="toc-link">"与日本的战争"</li>
+                            <li class="toc-link">"运送垃圾"</li>
+                            <li class="toc-link">20世纪80年代的原油</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary-color rounded-full text-white font-bold mb-4">04</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">美国复兴</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">芯片之王</li>
+                            <li class="toc-link">颠覆英特尔</li>
+                            <li class="toc-link">"敌人的敌人"：韩国的崛起</li>
+                            <li class="toc-link">"这就是未来"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-secondary-color rounded-full text-white font-bold mb-4">05</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">集成电路，集成世界？</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">"台湾想要一个半导体产业"</li>
+                            <li class="toc-link">"所有人都必须制造半导体"</li>
+                            <li class="toc-link">"与中国人分享上帝的爱"</li>
+                            <li class="toc-link">光刻战争</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-secondary-color rounded-full text-white font-bold mb-4">06</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">离岸创新？</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">"真正的男人要有晶圆厂"</li>
+                            <li class="toc-link">"无晶圆厂的革命"</li>
+                            <li class="toc-link">张忠谋的大联盟</li>
+                            <li class="toc-link">苹果硅</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-secondary-color rounded-full text-white font-bold mb-4">07</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">中国的挑战</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">中国制造</li>
+                            <li class="toc-link">"把冲锋号吹起来"</li>
+                            <li class="toc-link">技术转让</li>
+                            <li class="toc-link">"并购势必发生"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-12 h-12 flex items-center justify-center bg-secondary-color rounded-full text-white font-bold mb-4">08</div>
+                        <h3 class="text-xl font-bold mb-3 text-primary-color">芯片瓶颈</h3>
+                        <ul class="space-y-2">
+                            <li class="toc-link">"我们正在竞争的一切"</li>
+                            <li class="toc-link">福建晋华</li>
+                            <li class="toc-link">打击华为</li>
+                            <li class="toc-link">中国的人造卫星时刻？</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-8">
+                    <button id="show-full-toc" class="btn btn-primary">
+                        <i class="fas fa-list-ul mr-2"></i>查看完整目录
+                    </button>
+                </div>
+                
+                <!-- Full Table of Contents (Hidden) -->
+                <div id="full-toc" class="hidden mt-12 card p-8 max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-primary-color text-center">完整目录</h3>
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div>
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第一部分 冷战时期的筹码</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>1 从钢铁到硅片 / 013</li>
+                                    <li>2 开关 / 018</li>
+                                    <li>3 诺伊斯、基尔比和集成电路 / 021</li>
+                                    <li>4 起飞 / 025</li>
+                                    <li>5 迫击炮和规模生产 / 029</li>
+                                    <li>6 "我……要……发……财" / 034</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第二部分 美国世界的电路</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>7 苏联硅谷 / 041</li>
+                                    <li>8 "复制"策略 / 046</li>
+                                    <li>9 晶体管推销员 / 050</li>
+                                    <li>10 "晶体管女孩" / 056</li>
+                                    <li>11 精准打击 / 060</li>
+                                    <li>12 供应链策略 / 064</li>
+                                    <li>13 英特尔的革命 / 068</li>
+                                    <li>14 五角大楼的抵消战略 / 073</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第三部分 失去领导能力？</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>15 "竞争很激烈" / 081</li>
+                                    <li>16 "与日本的战争" / 085</li>
+                                    <li>17 "运送垃圾" / 090</li>
+                                    <li>18 20世纪80年代的原油 / 096</li>
+                                    <li>19 死亡螺旋 / 100</li>
+                                    <li>20 日本可以说"不" / 106</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第四部分 美国复兴</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>21 芯片之王 / 115</li>
+                                    <li>22 颠覆英特尔 / 121</li>
+                                    <li>23 "敌人的敌人"：韩国的崛起 / 126</li>
+                                    <li>24 "这就是未来" / 130</li>
+                                    <li>25 克格勃T局 / 135</li>
+                                    <li>26 "大规模毁灭性武器"：抵消战略的影响 / 139</li>
+                                    <li>27 战争英雄 / 144</li>
+                                    <li>28 "冷战结束了，你们赢了" / 148</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第五部分 集成电路，集成世界？</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>29 "台湾想要一个半导体产业" / 155</li>
+                                    <li>30 "所有人都必须制造半导体" / 161</li>
+                                    <li>31 "与中国人分享上帝的爱" / 166</li>
+                                    <li>32 光刻战争 / 171</li>
+                                    <li>33 创新者的困境 / 177</li>
+                                    <li>34 跑得更快？ / 183</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第六部分 离岸创新？</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>35 "真正的男人要有晶圆厂" / 191</li>
+                                    <li>36 "无晶圆厂的革命" / 195</li>
+                                    <li>37 张忠谋的大联盟 / 200</li>
+                                    <li>38 苹果硅 / 206</li>
+                                    <li>39 EUV光刻机 / 209</li>
+                                    <li>40 "没有 B 计划" / 215</li>
+                                    <li>41 英特尔如何遗忘创新 / 219</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-8">
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第七部分 中国的挑战</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>42 中国制造 / 227</li>
+                                    <li>43 "把冲锋号吹起来" / 229</li>
+                                    <li>44 技术转让 / 235</li>
+                                    <li>45 "并购势必发生" / 241</li>
+                                    <li>46 华为的崛起 / 245</li>
+                                    <li>47 5G未来 / 250</li>
+                                    <li>48 下一个抵消战略 / 254</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xl font-bold mb-4 text-primary-color">第八部分 芯片瓶颈</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li>49 "我们正在竞争的一切" / 265</li>
+                                    <li>50 福建晋华 / 272</li>
+                                    <li>51 打击华为 / 276</li>
+                                    <li>52 中国的人造卫星时刻？ / 282</li>
+                                    <li>53 短缺和供应链 / 288</li>
+                                    <li>54 台湾困境 / 295</li>
+                                    <li>结 论 / 303</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is a Chip Section -->
+        <section class="py-16 bg-gradient-to-b from-primary-color to-primary-dark text-white section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-white bg-opacity-20 text-white px-3 py-1 rounded-full mb-2">基础知识</span>
+                    <h2 class="text-3xl font-bold">芯片是什么</h2>
+                    <p class="mt-2 max-w-2xl mx-auto">了解芯片的基本定义、工作原理和重要性</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-filter backdrop-blur-sm border border-white border-opacity-20 hover:bg-opacity-15 transition-all transform hover:scale-105">
+                        <div class="flex items-center justify-center mb-6 text-white">
+                            <i class="fas fa-microchip text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center">芯片定义</h3>
+                        <p class="text-center text-white text-opacity-90">
+                            集成电路，是将多个电子元器件（如晶体管、电阻、电容等）集成在一块半导体基板上，是现代电子设备的核心部件。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-filter backdrop-blur-sm border border-white border-opacity-20 hover:bg-opacity-15 transition-all transform hover:scale-105">
+                        <div class="flex items-center justify-center mb-6 text-white">
+                            <i class="fas fa-globe text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center">芯片重要性</h3>
+                        <p class="text-center text-white text-opacity-90">
+                            芯片是现代科技的基石，广泛应用于电脑、手机、汽车、家电等几乎所有电子产品，影响着人们生活的方方面面，影响着国家经济和安全。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-filter backdrop-blur-sm border border-white border-opacity-20 hover:bg-opacity-15 transition-all transform hover:scale-105">
+                        <div class="flex items-center justify-center mb-6 text-white">
+                            <i class="fas fa-cogs text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center">芯片工作原理</h3>
+                        <p class="text-center text-white text-opacity-90">
+                            芯片通过在半导体材料上构建复杂电路实现特定功能，如同一个微小的"大脑"，通过操控电子运动来实现计算、存储和通信等功能。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="video-container">
+                        <iframe src="./player.html" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="py-16 section relative">
+            <div class="fancy-bg"></div>
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">历史脉络</span>
+                    <h2 class="text-3xl font-bold">芯片的起源和发展</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">从晶体管到现代芯片的演变历程</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="card p-6">
+                            <h3 class="text-xl font-bold mb-4 text-primary-color">晶体管的发明源于战争诉求</h3>
+                            <p class="mb-6">
+                                芯片基于晶体管，其发明追溯到第二次世界大战时期。二战后，计算能力和精确打击能力成为关键。早期计算机使用真空管，但存在体积大、耗电多、易损坏等问题。1945年，肖克利提出"固态阀门"理论，1947年，布喇顿和巴丁发明晶体管。晶体管逐渐取代真空管，但布线复杂。
+                            </p>
+                            <div class="mt-4">
+                                <img src="./7ce08eb1b31e0d04748136ad51574f55.jpeg" alt="真空管时代" class="rounded-lg shadow-md max-w-sm mx-auto" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="card p-6">
+                            <h3 class="text-xl font-bold mb-4 text-primary-color">集成电路的发明</h3>
+                            <p class="mb-6">
+                                1958年，杰克·基尔比发明集成电路，将多个晶体管集成在同一块半导体材料上，称为"芯片"。同一时间，肖克利公司的罗伯特·诺伊斯（Robert Noyce）发明了另一种形式的集成电路。由于肖克利糟糕的领导能力，以诺伊斯为首的八名工程师出走成立的仙童半导体公司（Fairchild）。后来的大半个硅谷的公司实际上都是从仙童半导体出去的人成立的，所以这八个"叛徒"被认为是硅谷创始人。
+                            </p>
+                            <div class="mt-4">
+                                <img src="./v2-9976b0ee86cb8350767280cb3ea500fd_1440w.webp" alt="八大金刚" class="rounded-lg shadow-md max-w-sm mx-auto" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="card p-6">
+                            <h3 class="text-xl font-bold mb-4 text-primary-color">光刻技术的发展</h3>
+                            <p class="mb-6">
+                                为了解决元器件小型化问题，杰伊·莱思罗普和詹姆斯·纳尔发明了光刻技术，利用光刻胶和显微镜原理，实现大规模生产微型晶体管。光刻技术的进步直接推动了芯片集成度的提高。
+                            </p>
+                            <div class="mt-4">
+                                <img src="./879364733296.5929.png" alt="光刻" class="rounded-lg shadow-md max-w-sm mx-auto" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="card p-6">
+                            <h3 class="text-xl font-bold mb-4 text-primary-color">芯片的军事应用</h3>
+                            <p class="mb-6">
+                                集成电路初期成本高，主要应用于军事领域。冷战期间，美苏军备竞赛推动芯片在军事装备中的应用，如阿波罗飞船、导弹制导系统等。海湾战争展示了芯片在现代化战争中的重要性。
+                            </p>
+                            <div class="mt-4">
+                                <img src="./EBE744457846E6D859A500B78ACE96B80B3E4D63_size804_w975_h549.png" alt="军事芯片" class="rounded-lg shadow-md max-w-sm mx-auto" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="card p-6">
+                            <h3 class="text-xl font-bold mb-4 text-primary-color">民用市场的推动</h3>
+                            <p class="mb-6">
+                                20世纪60年代，个人计算机发展带来巨大市场空间。英特尔推出4004芯片，成为世界上第一款微处理器CPU，推动了芯片技术的高速发展。随后，摩尔定律引领芯片性能指数级增长。
+                            </p>
+                            <div class="mt-4">
+                                <img src="./2f30835e41e6dba386a86e98ee10811c.jpeg" alt="英特尔4004芯片" class="rounded-lg shadow-md max-w-sm mx-auto" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chip War Causes Section -->
+        <section class="py-16 bg-secondary-color bg-opacity-5 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-secondary-light bg-opacity-20 text-secondary-dark px-3 py-1 rounded-full mb-2 dark:bg-secondary-dark dark:bg-opacity-20 dark:text-secondary-light">战争起因</span>
+                    <h2 class="text-3xl font-bold">芯片战争的起因</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">为什么芯片会成为国际竞争的焦点</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-bold mb-6 text-primary-color flex items-center">
+                            <i class="fas fa-microchip mr-3 text-secondary-color"></i> 
+                            技术因素
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="flex">
+                                <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-color bg-opacity-10 rounded-full mr-4">
+                                    <i class="fas fa-trophy text-secondary-color"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-2">技术竞争</h4>
+                                    <p>芯片性能提升、制程工艺缩小是技术竞争的核心，各国各企业致力于研发更先进的芯片技术，以占据市场优势。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-color bg-opacity-10 rounded-full mr-4">
+                                    <i class="fas fa-rocket text-secondary-color"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-2">技术突破推动</h4>
+                                    <p>二战期间，美国军方研发出世界上第一台计算机埃尼阿克，其基本组件真空管体积大、耗电多。后来，科学家研制出晶体管取代真空管，体积更小、性能更优。1958年，工程师吉尔比发明了集成电路，即芯片，大大减少了电路数量，提升了计算能力。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-color bg-opacity-10 rounded-full mr-4">
+                                    <i class="fas fa-chart-line text-secondary-color"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-2">技术迭代加速</h4>
+                                    <p>芯片技术发展日新月异，摩尔定律指出芯片上可容纳的晶体管数量约每两年翻一番，推动计算机能力飞跃式提升。如今，新型智能手机主半导体拥有100亿到200亿个晶体管，其微小程度令人惊叹。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-bold mb-6 text-primary-color flex items-center">
+                            <i class="fas fa-shield-alt mr-3 text-secondary-color"></i> 
+                            经济与安全因素
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="flex">
+                                <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-color bg-opacity-10 rounded-full mr-4">
+                                    <i class="fas fa-dollar-sign text-secondary-color"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-2">产业利润丰厚</h4>
+                                    <p>芯片产业是全球高科技产业的核心支柱之一，利润空间大。以智能手机为例，芯片成本占比约20%-30%，高端芯片更是可达40%以上。控制芯片技术，就等于掌握了巨大的经济利益。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-color bg-opacity-10 rounded-full mr-4">
+                                    <i class="fas fa-globe-americas text-secondary-color"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-2">全球市场争夺</h4>
+                                    <p>全球芯片市场规模庞大，2023年达5531亿美元，预计2024年将达5840亿美元。美国在芯片设计领域占据领先地位，拥有英特尔、高通等巨头；东亚的日本、韩国以及中国台湾地区则在制造、材料和设备制造等方面各有优势。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-secondary-color bg-opacity-10 rounded-full mr-4">
+                                    <i class="fas fa-fighter-jet text-secondary-color"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-2">国家安全考量</h4>
+                                    <p>芯片广泛应用于军事装备，如通信设备、导弹制导系统、雷达等。高性能芯片可提升军事装备的性能和精度，对国家安全至关重要。在信息化时代，芯片安全性直接关系到国家的信息安全。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="card p-6">
+                        <img src="./18f6ce65619387523fe8e969.png!800.jpg" alt="芯片战争示意图" class="rounded-lg shadow-lg w-full max-w-3xl mx-auto" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Players Section -->
+        <section class="py-16 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">参与者</span>
+                    <h2 class="text-3xl font-bold">芯片战争的主要参与者</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">全球芯片产业格局中的关键力量</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                    <div class="card chip-card p-6 text-center">
+                        <i class="fas fa-flag-usa chip-card-icon"></i>
+                        <div class="w-20 h-20 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-flag-usa text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">美国</h3>
+                        <p class="text-sm">
+                            拥有英特尔、高通等芯片巨头，长期在芯片设计和制造领域占据领先地位，通过技术封锁等手段维护自身优势。
+                        </p>
+                    </div>
+                    
+                    <div class="card chip-card p-6 text-center">
+                        <i class="fas fa-sun chip-card-icon"></i>
+                        <div class="w-20 h-20 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-sun text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">日本</h3>
+                        <p class="text-sm">
+                            在芯片材料和设备制造方面实力强劲，如东京电子等企业为全球芯片生产提供关键设备。
+                        </p>
+                    </div>
+                    
+                    <div class="card chip-card p-6 text-center">
+                        <i class="fas fa-yin-yang chip-card-icon"></i>
+                        <div class="w-20 h-20 bg-blue-500 text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-yin-yang text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">韩国</h3>
+                        <p class="text-sm">
+                            三星、海力士等企业在存储芯片领域占据重要地位，其 DRAM 和 NAND 闪存芯片市场份额全球领先。
+                        </p>
+                    </div>
+                    
+                    <div class="card chip-card p-6 text-center">
+                        <i class="fas fa-industry chip-card-icon"></i>
+                        <div class="w-20 h-20 bg-blue-500 text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-industry text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">中国台湾地区</h3>
+                        <p class="text-sm">
+                            台积电是全球最大的芯片代工厂，拥有先进的制程工艺，为众多芯片设计企业提供制造服务。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="card p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-primary-color text-center">全球芯片产业链分布</h3>
+                        <div class="flex flex-col md:flex-row gap-8 items-center">
+                            <div class="md:w-1/2">
+                                <img src="./photo-1591799264318-7e6ef8ddb7ea" alt="全球芯片产业链" class="rounded-lg shadow-lg w-full" loading="lazy">
+                            </div>
+                            <div class="md:w-1/2">
+                                <p class="mb-4">
+                                    全球芯片产业形成了高度专业化的分工体系，主要包括设计、制造、封装测试等环节。
+                                </p>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start gap-2">
+                                        <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                        <span><strong>芯片设计</strong> - 以美国为主导，拥有英特尔、高通、英伟达等巨头</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                        <span><strong>芯片制造</strong> - 台积电、三星和英特尔占据先进制程市场</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                        <span><strong>设备和材料</strong> - 荷兰ASML、美国应用材料、日本东京电子等</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                        <span><strong>封装测试</strong> - 主要集中在中国大陆、台湾和东南亚地区</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Milestones Section -->
+        <section class="py-16 bg-primary-color bg-opacity-5 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">关键节点</span>
+                    <h2 class="text-3xl font-bold">芯片战争的关键节点</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">几十年来芯片产业竞争的重要历史时刻</p>
+                </div>
+                
+                <div class="progress-timeline">
+                    <div class="timeline-node">60s</div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-node">80s</div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-node">00s</div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-node">10s+</div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                            <span class="inline-block w-8 h-8 bg-primary-color text-white rounded-full flex-shrink-0 flex items-center justify-center mr-2">60s</span>
+                            硅谷兴起
+                        </h3>
+                        <p class="text-sm">
+                            美国硅谷兴起，仙童半导体等公司推动了晶体管和集成电路的发展，开启了现代芯片技术的先河。此时芯片主要用于军事和航空航天领域。
+                        </p>
+                        <div class="mt-4 bg-primary-color bg-opacity-5 p-3 rounded-lg dark:bg-opacity-20">
+                            <p class="text-xs font-medium">关键事件：1959年，罗伯特·诺伊斯发明平面工艺，解决芯片互连问题。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                            <span class="inline-block w-8 h-8 bg-primary-color text-white rounded-full flex-shrink-0 flex items-center justify-center mr-2">80s</span>
+                            日本崛起
+                        </h3>
+                        <p class="text-sm">
+                            日本芯片产业崛起，通过政府支持和企业努力，在内存市场超越美国，引发美日芯片贸易战。美国随后通过产业联盟和政策调整重振芯片产业。
+                        </p>
+                        <div class="mt-4 bg-primary-color bg-opacity-5 p-3 rounded-lg dark:bg-opacity-20">
+                            <p class="text-xs font-medium">关键事件：1986年，美日半导体协议签署，要求日本开放市场并设定美国芯片市场份额目标。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                            <span class="inline-block w-8 h-8 bg-primary-color text-white rounded-full flex-shrink-0 flex items-center justify-center mr-2">00s</span>
+                            代工模式兴起
+                        </h3>
+                        <p class="text-sm">
+                            台积电等代工厂模式兴起，芯片设计与制造分离趋势明显，促使全球芯片产业分工更加细化。这一时期，封闭垂直整合模式向开放水平分工模式转变。
+                        </p>
+                        <div class="mt-4 bg-primary-color bg-opacity-5 p-3 rounded-lg dark:bg-opacity-20">
+                            <p class="text-xs font-medium">关键事件：2000年，台积电市值首次超过百亿美元，晶圆代工模式获得市场认可。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                            <span class="inline-block w-8 h-8 bg-primary-color text-white rounded-full flex-shrink-0 flex items-center justify-center mr-2">10s+</span>
+                            竞争加剧
+                        </h3>
+                        <p class="text-sm">
+                            移动互联网发展带来芯片新需求，5G、人工智能等新兴技术推动芯片性能不断提升，竞争愈发激烈。中美芯片竞争成为焦点，技术封锁与自主创新博弈加剧。
+                        </p>
+                        <div class="mt-4 bg-primary-color bg-opacity-5 p-3 rounded-lg dark:bg-opacity-20">
+                            <p class="text-xs font-medium">关键事件：2019年，美国将华为列入实体清单，限制其获取美国技术和产品。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section class="py-16 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-secondary-light bg-opacity-20 text-secondary-dark px-3 py-1 rounded-full mb-2 dark:bg-secondary-dark dark:bg-opacity-20 dark:text-secondary-light">影响分析</span>
+                    <h2 class="text-3xl font-bold">芯片战争的影响</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">芯片竞争对全球经济、科技发展和国际关系的深远影响</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="card p-6">
+                        <div class="w-16 h-16 bg-green-500 bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
+                            <i class="fas fa-chart-line text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center">对全球经济</h3>
+                        <p class="text-center mb-4">
+                            芯片短缺影响汽车、电子设备等产业生产，导致供应链中断和产品价格上涨。
+                        </p>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>2021年全球芯片短缺导致汽车产量减少约700万辆</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>电子产品价格上涨，消费者购买成本增加</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>促使各国重构芯片供应链，降低依赖风险</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-16 h-16 bg-purple-500 bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6 text-purple-500">
+                            <i class="fas fa-atom text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center">对科技发展</h3>
+                        <p class="text-center mb-4">
+                            促使各国加大芯片研发投入，推动前沿技术创新和应用。
+                        </p>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                                <span>加速量子计算、类脑计算等前沿技术研究</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                                <span>促进新材料、新工艺、新架构的探索</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                                <span>提高芯片能效比、降低能源消耗</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="w-16 h-16 bg-yellow-500 bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6 text-yellow-500">
+                            <i class="fas fa-globe-americas text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center">对国际关系</h3>
+                        <p class="text-center mb-4">
+                            芯片成为大国博弈焦点，加剧地缘政治紧张局势。
+                        </p>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-yellow-500 mt-1"></i>
+                                <span>中美科技竞争加剧，技术封锁措施增多</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-yellow-500 mt-1"></i>
+                                
+
+ERROR: Error in streaming API call: 
+
+
+
+[Response incomplete. Requesting continuation...]
+
+<span>全球产业链分工面临重构与调整</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-yellow-500 mt-1"></i>
+                                <span>台湾海峡局势紧张加剧风险担忧</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="card-elevated p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center text-primary-color">芯片竞争的未来影响</h3>
+                        <p class="text-center mb-8">
+                            芯片战争将持续影响全球产业布局，推动技术创新，重塑国际经济秩序
+                        </p>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                <h4 class="font-bold mb-2 text-center">产业多元化</h4>
+                                <p class="text-sm text-center">
+                                    全球芯片产业链将向多区域、多点布局发展，降低单点风险
+                                </p>
+                            </div>
+                            <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                <h4 class="font-bold mb-2 text-center">持续创新</h4>
+                                <p class="text-sm text-center">
+                                    竞争压力将推动更多技术突破，加速芯片迭代周期
+                                </p>
+                            </div>
+                            <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                <h4 class="font-bold mb-2 text-center">区域政策调整</h4>
+                                <p class="text-sm text-center">
+                                    各国将加大芯片产业支持力度，出台更多产业扶持政策
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- China's Chip Industry Section -->
+        <section class="py-16 bg-gradient-to-r from-primary-color to-secondary-color text-white section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-white bg-opacity-20 text-white px-3 py-1 rounded-full mb-2">中国视角</span>
+                    <h2 class="text-3xl font-bold">中国芯片产业的现状与挑战</h2>
+                    <p class="mt-2 max-w-2xl mx-auto text-white text-opacity-90">当前发展情况、面临问题及未来机遇</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-chart-pie mr-3"></i> 现状
+                        </h3>
+                        <p class="mb-4 text-white text-opacity-90">
+                            中国是全球最大的芯片消费市场，近年来芯片设计、制造等环节取得进步，如华为海思等企业崭露头角。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle mt-1 text-white text-opacity-60"></i>
+                                <span>市场规模庞大，消费电子、汽车电子等领域需求旺盛</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle mt-1 text-white text-opacity-60"></i>
+                                <span>国家政策大力支持，"十四五"规划将集成电路列为重点发展领域</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle mt-1 text-white text-opacity-60"></i>
+                                <span>本土企业快速成长，如中芯国际、华为海思等</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle mt-1 text-white text-opacity-60"></i>
+                                <span>产业链逐步完善，从设计、制造到封装测试各环节均有布局</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-10 p-6 rounded-lg backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-3"></i> 挑战
+                        </h3>
+                        <p class="mb-4 text-white text-opacity-90">
+                            高端芯片制造设备依赖进口，如光刻机等关键设备仍受制于人；芯片设计软件（EDA）也主要依赖国外；高端人才短缺，与国际顶尖水平还有差距。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-times-circle mt-1 text-white text-opacity-60"></i>
+                                <span>核心技术受制于人，高端芯片制造工艺与国际先进水平有差距</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-times-circle mt-1 text-white text-opacity-60"></i>
+                                <span>关键设备依赖进口，如ASML的EUV光刻机等</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-times-circle mt-1 text-white text-opacity-60"></i>
+                                <span>设计工具受限，EDA软件主要由美国Synopsys、Cadence等公司提供</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-times-circle mt-1 text-white text-opacity-60"></i>
+                                <span>高端人才缺乏，特别是在芯片架构设计、工艺研发等领域</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-12 max-w-4xl mx-auto bg-white bg-opacity-10 p-6 rounded-lg backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        <div class="md:w-1/2">
+                            <img src="./2cd2f862-96a3-4c48-b437-47d3a197e749.png" alt="中国半导体行业政策" class="rounded-lg shadow-md w-full" loading="lazy">
+                        </div>
+                        <div class="md:w-1/2">
+                            <h3 class="text-xl font-bold mb-4">未来发展方向</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-arrow-right mt-1 text-white text-opacity-60"></i>
+                                    <span>加大科研投入，突破关键技术瓶颈</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-arrow-right mt-1 text-white text-opacity-60"></i>
+                                    <span>培养高端人才，建立完善的人才生态系统</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-arrow-right mt-1 text-white text-opacity-60"></i>
+                                    <span>提升产业协同，加强上下游协作</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-arrow-right mt-1 text-white text-opacity-60"></i>
+                                    <span>开展国际合作，参与全球价值链分工</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Outlook Section -->
+        <section class="py-16 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">未来展望</span>
+                    <h2 class="text-3xl font-bold">未来展望</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">芯片产业的发展趋势和未来可能性</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="card p-6">
+                        <div class="flex items-center justify-center mb-6 text-blue-500">
+                            <i class="fas fa-microchip text-6xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center text-primary-color">技术趋势</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>芯片制程向2纳米以下发展</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>3D堆叠技术解决物理极限挑战</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>异构计算架构提升能效比</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>AI芯片设计自动化加速发展</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex items-center justify-center mb-6 text-green-500">
+                            <i class="fas fa-industry text-6xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center text-primary-color">产业趋势</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>芯片产业区域化趋势明显</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>企业并购整合加速，集中度提高</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>定制化芯片成为主流</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>芯片安全成为重要关注点</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex items-center justify-center mb-6 text-red-500">
+                            <i class="fas fa-rocket text-6xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-center text-primary-color">中国的机遇</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>国内市场需求大，为产业发展提供空间</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>政策持续支持，资金投入充足</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>新兴应用场景创造差异化发展机会</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-primary-color mt-1"></i>
+                                <span>人才培养体系逐步完善</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="card-elevated p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center text-primary-color">全球芯片产业未来发展路线图</h3>
+                        <div class="flex flex-col items-center">
+                            <img src="./photo-1518770660439-4636190af475" alt="芯片技术路线图" class="rounded-lg shadow-lg max-w-3xl w-full mb-8" loading="lazy">
+                                 
+                            <div class="grid md:grid-cols-4 gap-6 w-full">
+                                <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                    <h4 class="font-bold mb-2 text-center">2025年</h4>
+                                    <p class="text-sm text-center">
+                                        2nm工艺量产，AI芯片算力大幅提升
+                                    </p>
+                                </div>
+                                <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                    <h4 class="font-bold mb-2 text-center">2028年</h4>
+                                    <p class="text-sm text-center">
+                                        3D堆叠技术成熟，存算一体化架构普及
+                                    </p>
+                                </div>
+                                <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                    <h4 class="font-bold mb-2 text-center">2030年</h4>
+                                    <p class="text-sm text-center">
+                                        量子和光子芯片商用，摩尔定律新路径
+                                    </p>
+                                </div>
+                                <div class="bg-primary-color bg-opacity-5 p-4 rounded-lg dark:bg-opacity-10">
+                                    <h4 class="font-bold mb-2 text-center">2035年</h4>
+                                    <p class="text-sm text-center">
+                                        类脑计算芯片普及，能效比提升百倍
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="py-16 bg-primary-color bg-opacity-5 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-primary-light bg-opacity-20 text-primary-dark px-3 py-1 rounded-full mb-2 dark:bg-primary-dark dark:bg-opacity-20 dark:text-primary-light">总结</span>
+                    <h2 class="text-3xl font-bold">总结</h2>
+                </div>
+                
+                <div class="card-elevated p-8 max-w-4xl mx-auto">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                                <i class="fas fa-flag-checkered mr-3"></i>芯片战争的本质
+                            </h3>
+                            <p class="leading-relaxed">
+                                芯片战争本质上是技术、经济和国家安全等多方面因素交织的复杂博弈，反映了全球科技产业竞争的激烈程度。芯片不仅关系到产业发展，更关系到国家安全和地缘政治格局，这也是为什么各国都高度重视芯片产业发展的原因。
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                                <i class="fas fa-lightbulb mr-3"></i>对中国的启示
+                            </h3>
+                            <p class="leading-relaxed">
+                                对中国而言，芯片产业是一场关乎国家长远发展的战略性竞争。中国需要加大自主研发投入，培养高端人才，加强产业链协同，在坚持独立自主的同时，积极融入全球价值链，寻求互利共赢的合作。只有艰苦奋斗、锐意创新，才能在芯片领域赢得一席之地。
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 text-primary-color flex items-center">
+                                <i class="fas fa-globe mr-3"></i>全球视角
+                            </h3>
+                            <p class="leading-relaxed">
+                                从全球视角看，芯片战争虽然加剧了竞争，但也推动了技术进步。各国在保障自身安全的同时，仍需保持开放合作的态度，共同应对全球性挑战。全球芯片产业已形成深度融合的产业链，过度脱钩不符合任何一方利益。未来，在竞争中寻求合作，将是芯片产业发展的必然趋势。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-6 bg-primary-color bg-opacity-5 rounded-lg dark:bg-opacity-10 border-l-4 border-primary-color">
+                        <p class="italic">
+                            "谁掌握了芯片，谁就掌握了未来。但真正的未来，属于那些能够在创新中协作，在竞争中共赢的国家与企业。"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Reading Section -->
+        <section id="related-reading" class="py-16 section">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <span class="inline-block text-sm font-medium bg-secondary-light bg-opacity-20 text-secondary-dark px-3 py-1 rounded-full mb-2 dark:bg-secondary-dark dark:bg-opacity-20 dark:text-secondary-light">延伸阅读</span>
+                    <h2 class="text-3xl font-bold">关联阅读</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">了解更多关于芯片产业和技术的精彩书籍</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="card overflow-hidden">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="md:w-2/5 overflow-hidden">
+                                <img src="./7e9f9b18163d2e0b20f4b4c3cffc3a58.jpg" alt="芯片战争封面" class="related-book-cover w-full h-full object-cover" loading="lazy">
+                            </div>
+                            <div class="md:w-3/5 p-6">
+                                <h3 class="text-xl font-bold mb-2 text-primary-color">《芯片战争》</h3>
+                                <p class="text-gray-700 dark:text-gray-300 mb-4 text-sm">作者：[美]克里斯·米勒（Chris Miller）</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">
+                                    讲述了芯片业崛起的历史，背后的科技突破和商业进程史，以及各国为控制芯片技术而进行的长达数十年的斗争历程，是了解芯片产业全球格局的重要读物。
+                                </p>
+                                <div class="flex">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span class="text-gray-600 dark:text-gray-400 ml-2">4.5/5分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card overflow-hidden">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="md:w-2/5 overflow-hidden">
+                                <img src="./6e192aa030a949278fa5e1edc910e74a.jpg" alt="芯片简史封面" class="related-book-cover w-full h-full object-cover" loading="lazy">
+                            </div>
+                            <div class="md:w-3/5 p-6">
+                                <h3 class="text-xl font-bold mb-2 text-primary-color">《芯片简史》</h3>
+                                <p class="text-gray-700 dark:text-gray-300 mb-4 text-sm">作者：汪波</p>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">
+                                    以芯片的诞生和发展为主线，将散落在世界各地的实验室、杂志、书籍或新闻报道的庞杂信息重新组织、编排，力求准确、科学地呈现芯片的发展历程，特别关注了技术演进的历史细节。
+                                </p>
+                                <div class="flex">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <span class="text-gray-600 dark:text-gray-400 ml-2">4/5分</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="https://pan.baidu.com/s/17MgG0dsEHBa3DVmOmJcqOQ?pwd=pn2d" class="btn btn-secondary inline-flex items-center">
+                        <i class="fas fa-download mr-2"></i>
+                        获取电子版网盘分享
+                    </a>
+                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">包含《芯片战争》和《芯片简史》的电子版</p>
+                </div>
+                
+                <div class="mt-12 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold mb-3 text-primary-color">更多推荐书籍</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-book text-primary-color mt-1"></i>
+                                <span>《数字逻辑基础与VHDL设计》 - 理解芯片设计基础</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-book text-primary-color mt-1"></i>
+                                <span>《硅谷百年史》 - 了解芯片产业发源地的历史</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-book text-primary-color mt-1"></i>
+                                <span>《集成电路设计》 - 学习芯片设计原理</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold mb-3 text-primary-color">相关纪录片</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-film text-primary-color mt-1"></i>
+                                <span>《硅谷传奇》 - 讲述硅谷兴起的历程</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-film text-primary-color mt-1"></i>
+                                <span>《芯片之父》 - 关于罗伯特·诺伊斯的纪录片</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-film text-primary-color mt-1"></i>
+                                <span>《科技国家队》 - 介绍各国科技竞争</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold mb-3 text-primary-color">在线资源</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-link text-primary-color mt-1"></i>
+                                <span>半导体行业观察 - 行业动态分析</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-link text-primary-color mt-1"></i>
+                                <span>EE Times - 电子工程专业资讯</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-link text-primary-color mt-1"></i>
+                                <span>AnandTech - 芯片技术深度解析</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 mb-12">
+                <div>
+                    <h3 class="footer-heading">关于分享者</h3>
+                    <p class="mb-6 text-white text-opacity-80">
+                        夏非，科技领域研究者，长期关注集成电路和芯片产业发展，致力于推广科技知识普及。
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center gap-6">
+                        <div>
+                            <img src="./470643c116435a45793e567c135ba1aa.jpeg" alt="微信二维码" class="qr-code" loading="lazy">
+                        </div>
+                        <div>
+                            <p class="text-white text-opacity-80 mb-2">
+                                欢迎扫码交流或关注
+                            </p>
+                            <div class="flex gap-4 mt-4">
+                                <a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-opacity-20 transition-all">
+                                    <i class="fab fa-weixin text-white"></i>
+                                </a>
+                                <a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-opacity-20 transition-all">
+                                    <i class="fab fa-weibo text-white"></i>
+                                </a>
+                                <a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-opacity-20 transition-all">
+                                    <i class="fab fa-zhihu text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-heading">更多信息</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="text-white font-medium mb-3">科技前沿</h4>
+                            <ul class="space-y-2 text-white text-opacity-70">
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">集成电路</a></li>
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">量子计算</a></li>
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">人工智能</a></li>
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">5G/6G技术</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-medium mb-3">读书推荐</h4>
+                            <ul class="space-y-2 text-white text-opacity-70">
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">科技类</a></li>
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">经济类</a></li>
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">历史类</a></li>
+                                <li><a href="https://a0b154ac-6e8d-4a48-bcee-e9b267b34429--1744858800--cdf9898c.app.yourware.app/#" class="hover:text-white hover:underline">管理类</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white border-opacity-20 pt-8 text-center text-white text-opacity-60">
+                <p>© 2025 卓夏非. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 预加载器
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 500);
+        });
+        
+        // 深色模式切换
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // 检查系统偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.classList.remove('light');
+            html.classList.add('dark');
+        }
+        
+        // 检查本地存储中的主题设置
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.classList.remove('light', 'dark');
+            html.classList.add(savedTheme);
+        }
+        
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // 不要取消观察，这样当元素再次进入视口时仍然会触发动画
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // 目录展开/收起
+        const showFullTocBtn = document.getElementById('show-full-toc');
+        const fullToc = document.getElementById('full-toc');
+        
+        showFullTocBtn.addEventListener('click', () => {
+            if (fullToc.classList.contains('hidden')) {
+                fullToc.classList.remove('hidden');
+                showFullTocBtn.innerHTML = '<i class="fas fa-times mr-2"></i>收起完整目录';
+            } else {
+                fullToc.classList.add('hidden');
+                showFullTocBtn.innerHTML = '<i class="fas fa-list-ul mr-2"></i>查看完整目录';
+            }
+        });
+        
+        // 标题栏滚动效果
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scroll');
+            } else {
+                header.classList.remove('header-scroll');
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 图片懒加载
+        if ('loading' in HTMLImageElement.prototype) {
+            // 如果浏览器支持原生懒加载
+            document.querySelectorAll('img').forEach(img => {
+                img.loading = 'lazy';
+            });
+        } else {
+            // 回退到IntersectionObserver实现
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const src = img.getAttribute('data-src');
+                        
+                        if (src) {
+                            img.src = src;
+                            img.removeAttribute('data-src');
+                        }
+                        
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+
+</body><div class="xl-chrome-ext-bar_4DB361DE-01F7-4376-B494-639E489D19ED" id="xl_chrome_ext_4DB361DE-01F7-4376-B494-639E489D19ED" data-v-app="" style="display: block;"><div class=""><div id="xl_chrome_ext_video_tag_wrapper_4DB361DE-01F7-4376-B494-639E489D19ED" config="[object Object]" uiversion="v2" exception="false" latestvideosrc="" isshowvideotag="false" isshowdownloadbar="true" isshowcloudaddbar="false"><div class="_video_op_wrapper_96mx8_1" config="[object Object]" uiversion="v2" style="display: none;"><ul class="_video_op_list_96mx8_17"><li class="_op_item_96mx8_39 _download_96mx8_45"><span class="_op_icon_96mx8_25"></span><span class="_op_text_96mx8_31">下载</span></li><li class="_op_item_96mx8_39 _screen_96mx8_51"><span class="_op_icon_96mx8_25"></span><span class="_op_text_96mx8_31">投屏</span></li></ul></div></div><div class="badge_wrapper_4DB361DE-01F7-4376-B494-639E489D19ED _badge_wrapper_eor63_1" id="badge_wrapper_4DB361DE-01F7-4376-B494-639E489D19ED"><div class="_logo_eor63_20"></div><span class="_line_eor63_27"></span><div class="_text_wrapper_eor63_33"><span class="_download_icon_eor63_39"></span><span class="_text_eor63_33">高速下载</span></div></div><!----><!----><!----><!----><div class="_container_wq4mj_4"><!----></div></div></div></html>
